@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+    pix_explorer:
+      container_name: pix_explorer_frontend
+      build:
+        context: .
+      volumes:
+          - '.:/app'
+      ports:
+          - '3000:3000'
