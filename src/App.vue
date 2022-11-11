@@ -1,7 +1,4 @@
-<script setup lang="ts">
-import { RouterLink } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="main">
@@ -36,24 +33,6 @@ import HelloWorld from "./components/HelloWorld.vue";
       <button>Enviar</button>
     </form>
   </div>
-  <!-- <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header> -->
 </template>
 
 <style scoped>
@@ -69,7 +48,7 @@ import HelloWorld from "./components/HelloWorld.vue";
 .main-content {
   padding-left: 120px;
   padding-top: 100px;
-  width: 525px;
+  width: 825px;
   color: var(--vt-c-white);
 }
 
@@ -96,8 +75,8 @@ import HelloWorld from "./components/HelloWorld.vue";
   border-radius: 20px;
   padding: 72px 80px 0 80px;
   margin: 124px 86px;
-  width: 525px;
-  height: 700px;
+  color:#4F4F4F;
+  width: 625px;
   box-shadow: rgba(0, 0, 0, 0.25) 3px 5px 5px;
 }
 
