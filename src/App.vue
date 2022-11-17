@@ -35,6 +35,7 @@ import HelloWorld from "./components/HelloWorld.vue";
       <br />
       <button>Enviar</button>
     </form>
+    <div id="circle"></div>
   </div>
   <!-- <header>
     <img
@@ -99,6 +100,7 @@ import HelloWorld from "./components/HelloWorld.vue";
   width: 525px;
   height: 700px;
   box-shadow: rgba(0, 0, 0, 0.25) 3px 5px 5px;
+  z-index: 1;
 }
 
 .main-form h3 {
@@ -146,6 +148,20 @@ import HelloWorld from "./components/HelloWorld.vue";
 input::placeholder{
   color: #CBCBCB;
   font-weight: 400;
+}
+
+#circle{
+  border-radius: 800%;
+  box-shadow: 0px 0px 0px #34bdad, 0px 0px 0px 10px var(--vt-c-white),
+    0px 0px 0px 50px #34bdad, 0px 0px 0px 60px var(--vt-c-white),
+    0px 0px 0px 100px #34bdad, 0px 0px 0px 110px var(--vt-c-white),
+    0px 0px 0px 150px #34bdad, 0px 0px 0px 160px var(--vt-c-white),
+    0px 0px 0px 200px #34bdad, 0px 0px 0px 210px var(--vt-c-white);
+  width: 300px;
+  height:300px;
+  position: absolute;
+  left: 45%;
+  top: 35%;
 }
 
 header {
