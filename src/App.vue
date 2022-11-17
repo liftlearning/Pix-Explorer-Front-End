@@ -51,7 +51,7 @@ export default {
       <br />
       <button @click="toggleModal" type='button'>Enviar</button>
     </form>
-    <!-- <Modal class="modal" @close="toggleModal" :modalActive="modalActive">
+    <Modal class="modal" @close="toggleModal" :modalActive="modalActive">
       <div class="modal-not-find">
         <h1>Transação não encontrada</h1>
         <h3>
@@ -59,8 +59,8 @@ export default {
           dados e tente novamente.
         </h3>
       </div>
-    </Modal> -->
-    <Modal class="modal" @close="toggleModal" :modalActive="modalActive">
+    </Modal>
+    <!-- <Modal class="modal" @close="toggleModal" :modalActive="modalActive">
       <div class="modal-find">
         <h1>Transação Encontrada</h1>
         <hr />
@@ -74,7 +74,7 @@ export default {
         <h3>xxxxxxx</h3>
         <hr />
       </div>
-    </Modal>
+    </Modal> -->
   </div>
 </template>
 
