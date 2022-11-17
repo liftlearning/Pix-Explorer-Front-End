@@ -37,24 +37,6 @@ import HelloWorld from "./components/HelloWorld.vue";
     </form>
     <div id="circle"></div>
   </div>
-  <!-- <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header> -->
 </template>
 
 <style scoped>
@@ -98,25 +80,25 @@ import HelloWorld from "./components/HelloWorld.vue";
   padding: 72px 80px 0 80px;
   margin: 124px 86px;
   width: 525px;
-  height: 700px;
+  height: 750px;
   box-shadow: rgba(0, 0, 0, 0.25) 3px 5px 5px;
   z-index: 1;
 }
 
 .main-form h3 {
-  font-size: 36px;
+  font-size: 42px;
   font-weight: 700;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 
 .main-form p {
   font-size: 20px;
   font-weight: 400;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .main-form label {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   margin-bottom: 5px;
   display: inline-block;
@@ -124,18 +106,18 @@ import HelloWorld from "./components/HelloWorld.vue";
 
 .main-form input {
   width: 100%;
-  font-size: 16px;
+  font-size: 18px;
   padding: 6px 8px 6px 8px;
   font-weight: 400;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   border-radius: 6px;
   border: 1px solid #00000033;
 }
 
 .main-form button {
-  margin-top: 25px;
+  margin-top: 30px;
   width: 100%;
-  font-size: 24px;
+  font-size: 26px;
   padding: 10px;
   font-weight: 700;
   border-radius: 6px;
