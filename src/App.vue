@@ -1,7 +1,26 @@
-<script setup lang="ts"></script>
+<script lang="ts">
+import { RouterLink } from "vue-router";
+import HelloWorld from "./components/HelloWorld.vue";
+import Modal from "./components/CustomModal.vue";
+import { ref } from "vue";
+export default {
+  name: "App",
+  components: {
+    Modal,
+  },
+  setup() {
+    const modalActive = ref(false);
+    const toggleModal = () => {
+      modalActive.value = !modalActive.value;
+    };
+    return { modalActive, toggleModal };
+  },
+};
+</script>
 
 <template>
   <div class="main">
+    <div id="circle"></div>
     <div class="main-content">
       <h2>PIX Explorer</h2>
       <p>
@@ -30,8 +49,32 @@
       <br />
       <input type="text" placeholder="Insira o ID da transação"/>
       <br />
-      <button>Enviar</button>
+      <button @click="toggleModal" type='button'>Enviar</button>
     </form>
+    <Modal class="modal" @close="toggleModal" :modalActive="modalActive">
+      <div class="modal-not-find">
+        <h1>Transação não encontrada</h1>
+        <h3>
+          Não foi possível localização a transação solicitada. Verifique os
+          dados e tente novamente.
+        </h3>
+      </div>
+    </Modal>
+    <!-- <Modal class="modal" @close="toggleModal" :modalActive="modalActive">
+      <div class="modal-find">
+        <h1>Transação Encontrada</h1>
+        <hr />
+        <h2>Recebedor</h2>
+        <h3>xxxxxxx</h3>
+        <h2>Origem</h2>
+        <h3>xxxxxxx</h3>
+        <h2>Valor</h2>
+        <h3>xxxxxxx</h3>
+        <h2>Data</h2>
+        <h3>xxxxxxx</h3>
+        <hr />
+      </div>
+    </Modal> -->
   </div>
 </template>
 
@@ -75,25 +118,25 @@
   border-radius: 20px;
   padding: 72px 80px 0 80px;
   margin: 124px 86px;
-  color:#4F4F4F;
-  width: 625px;
+  width: 525px;
+  height: 750px;
   box-shadow: rgba(0, 0, 0, 0.25) 3px 5px 5px;
 }
 
 .main-form h3 {
-  font-size: 36px;
+  font-size: 42px;
   font-weight: 700;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 
 .main-form p {
   font-size: 20px;
   font-weight: 400;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .main-form label {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   margin-bottom: 5px;
   display: inline-block;
@@ -101,18 +144,18 @@
 
 .main-form input {
   width: 100%;
-  font-size: 16px;
+  font-size: 18px;
   padding: 6px 8px 6px 8px;
   font-weight: 400;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   border-radius: 6px;
   border: 1px solid #00000033;
 }
 
 .main-form button {
-  margin-top: 25px;
+  margin-top: 30px;
   width: 100%;
-  font-size: 24px;
+  font-size: 26px;
   padding: 10px;
   font-weight: 700;
   border-radius: 6px;
@@ -125,6 +168,61 @@
 input::placeholder{
   color: #CBCBCB;
   font-weight: 400;
+}
+
+#circle{
+  border-radius: 800%;
+  box-shadow: 0px 0px 0px #34bdad, 0px 0px 0px 10px var(--vt-c-white),
+    0px 0px 0px 50px #34bdad, 0px 0px 0px 60px var(--vt-c-white),
+    0px 0px 0px 100px #34bdad, 0px 0px 0px 110px var(--vt-c-white),
+    0px 0px 0px 150px #34bdad, 0px 0px 0px 160px var(--vt-c-white),
+    0px 0px 0px 200px #34bdad, 0px 0px 0px 210px var(--vt-c-white);
+  width: 300px;
+  height:300px;
+  position: absolute;
+  left: 45%;
+  top: 35%;
+}
+
+.modal-not-find h1 {
+  font-weight: 700;
+  font-size: 36px;
+}
+
+.modal-no-find h3 {
+  font-weight: 400;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+
+.modal-find h1 {
+  font-weight: 700;
+  font-size: 40px;
+  color: #34bdad;
+}
+
+.modal-find hr {
+  height: 1px;
+  background-color: #34bdad;
+  border: none;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.modal-find h2 {
+  font-weight: 500;
+  font-size: 30px;
+}
+
+.modal-find h3 {
+  font-weight: 400;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.modal-find h3:last-of-type {
+  margin-bottom: 24px;
 }
 
 header {
