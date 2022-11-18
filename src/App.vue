@@ -1,26 +1,48 @@
 <script lang="ts">
-import { RouterLink } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
 import Modal from "./components/CustomModal.vue";
-import { ref } from "vue";
+import { validatePix } from "./services/pix";
 export default {
   name: "App",
   components: {
     Modal,
   },
-  setup() {
-    const modalActive = ref(false);
-    const toggleModal = () => {
-      modalActive.value = !modalActive.value;
+  data() {
+    return {
+      backdrop: false,
+      rawSalary: "",
+      errorModal: false,
+      successModal: false,
+      pix: { e2e_id: "", pix_key: "", pix_value: "" },
     };
-    return { modalActive, toggleModal };
+  },
+  methods: {
+    async validatePix() {
+      this.backdrop = true;
+      const res = await validatePix(this.pix);
+      this.backdrop = false;
+      if (res) this.successModal = true;
+      else this.errorModal = true;
+    },
+    changeCurrency(e: any) {
+      this.pix.pix_value = e.target.value;
+    },
+  },
+  computed: {
+    formattedSalary() {
+      return this.pix.pix_value
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
   },
 };
 </script>
 
 <template>
   <div class="main">
-    <div id="circle"></div>
+    <img src="./assets/cicle.png" id="cicle" />
+    <img src="./assets/dots.png" id="dot1" />
+    <img src="./assets/dots.png" id="dot2" />
+    <img src="./assets/white-dot.png" id="dot3" />
     <div class="main-content">
       <h2>PIX Explorer</h2>
       <p>
@@ -39,19 +61,48 @@ export default {
       </p>
       <label>Chave Pix</label>
       <br />
-      <input type="text" placeholder="Insira a chave PIX" />
+      <input
+        type="text"
+        placeholder="Insira a chave PIX"
+        v-model="pix.pix_key"
+      />
       <br />
       <label>Valor</label>
       <br />
-      <input type="text" placeholder="Insira o valor da transação"/>
+
+      <input
+        type="number"
+        :value="formattedSalary"
+        @change="changeCurrency"
+        placeholder="Insira o valor da transação"
+      />
+
       <br />
       <label>ID da Transação</label>
       <br />
-      <input type="text" placeholder="Insira o ID da transação"/>
+      <input
+        type="text"
+        placeholder="Insira o ID da transação"
+        v-model="pix.e2e_id"
+      />
       <br />
-      <button @click="toggleModal" type='button'>Enviar</button>
+      <button
+        @click="validatePix"
+        type="button"
+        :disabled="
+          pix.e2e_id.length === 0 ||
+          pix.pix_key.length === 0 ||
+          pix.pix_value.length === 0
+        "
+      >
+        Enviar
+      </button>
     </form>
-    <Modal class="modal" @close="toggleModal" :modalActive="modalActive">
+    <Modal
+      class="modal"
+      @close="() => (errorModal = false)"
+      :modalActive="errorModal"
+    >
       <div class="modal-not-find">
         <h1>Transação não encontrada</h1>
         <h3>
@@ -60,7 +111,11 @@ export default {
         </h3>
       </div>
     </Modal>
-    <!-- <Modal class="modal" @close="toggleModal" :modalActive="modalActive">
+    <Modal
+      class="modal"
+      @close="() => (successModal = false)"
+      :modalActive="successModal"
+    >
       <div class="modal-find">
         <h1>Transação Encontrada</h1>
         <hr />
@@ -69,12 +124,16 @@ export default {
         <h2>Origem</h2>
         <h3>xxxxxxx</h3>
         <h2>Valor</h2>
-        <h3>xxxxxxx</h3>
+        <h3>{{ pix.pix_value }}</h3>
         <h2>Data</h2>
         <h3>xxxxxxx</h3>
         <hr />
       </div>
-    </Modal> -->
+    </Modal>
+
+    <div id="backdrop" v-if="backdrop">
+      <h1>Carregando...</h1>
+    </div>
   </div>
 </template>
 
@@ -85,7 +144,47 @@ export default {
   color: black;
   height: 100vh;
   width: 100vw;
-  background: linear-gradient(90deg, #34BDAD 60%, var(--vt-c-white) 40%);
+  overflow: hidden;
+  background: linear-gradient(90deg, #34bdad 60%, var(--vt-c-white) 40%);
+}
+
+#backdrop {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background-color: #35353590;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+#dot3 {
+  width: 8%;
+  position: absolute;
+  left: 3%;
+  bottom: 20%;
+}
+
+#dot2 {
+  position: absolute;
+  right: 15%;
+  bottom: 5%;
+}
+
+#dot1 {
+  position: absolute;
+  right: 5%;
+  top: 5%;
+}
+
+#cicle {
+  width: 17%;
+  position: absolute;
+  right: 40%;
+  bottom: 0;
 }
 
 .main-content {
@@ -118,13 +217,13 @@ export default {
   border-radius: 20px;
   padding: 72px 80px 0 80px;
   margin: 124px 86px;
-  width: 525px;
+  width: 625px;
   height: 750px;
   box-shadow: rgba(0, 0, 0, 0.25) 3px 5px 5px;
 }
 
 .main-form h3 {
-  font-size: 42px;
+  font-size: 32px;
   font-weight: 700;
   margin-bottom: 15px;
 }
@@ -160,28 +259,28 @@ export default {
   font-weight: 700;
   border-radius: 6px;
   border: 1px solid transparent;
-  background-color: #34BDAD;
+  background-color: #34bdad;
   color: var(--vt-c-white);
   cursor: pointer;
 }
 
-input::placeholder{
-  color: #CBCBCB;
+input::placeholder {
+  color: #cbcbcb;
   font-weight: 400;
 }
 
-#circle{
-  border-radius: 800%;
+#circle {
+  border-radius: 50%;
   box-shadow: 0px 0px 0px #34bdad, 0px 0px 0px 10px var(--vt-c-white),
     0px 0px 0px 50px #34bdad, 0px 0px 0px 60px var(--vt-c-white),
     0px 0px 0px 100px #34bdad, 0px 0px 0px 110px var(--vt-c-white),
     0px 0px 0px 150px #34bdad, 0px 0px 0px 160px var(--vt-c-white),
     0px 0px 0px 200px #34bdad, 0px 0px 0px 210px var(--vt-c-white);
   width: 300px;
-  height:300px;
+  height: 300px;
   position: absolute;
   left: 45%;
-  top: 35%;
+  bottom: 30%;
 }
 
 .modal-not-find h1 {
@@ -194,7 +293,6 @@ input::placeholder{
   font-size: 20px;
   margin-bottom: 10px;
 }
-
 
 .modal-find h1 {
   font-weight: 700;
@@ -284,6 +382,11 @@ nav a:first-of-type {
 
     padding: 1rem 0;
     margin-top: 1rem;
+  }
+
+  .main-form button[disabled] {
+    background-color: #cccccc;
+    color: #666666;
   }
 }
 </style>
